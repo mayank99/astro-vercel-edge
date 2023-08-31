@@ -14,6 +14,16 @@ function getAdapter() {
         name: PACKAGE_NAME,
         serverEntrypoint: `${PACKAGE_NAME}/entrypoint`,
         exports: ['default'],
+        supportedAstroFeatures: {
+            hybridOutput: 'stable',
+            staticOutput: 'unsupported',
+            serverOutput: 'stable',
+            assets: {
+                supportKind: 'unstable',
+                isSharpCompatible: true,
+                isSquooshCompatible: true,
+            },
+        },
     };
 }
 
@@ -44,6 +54,7 @@ export default function vercelEdge({ includeFiles = [], analytics, imageService,
                         ssr: {
                             external: ['@vercel/nft'],
                         },
+                        build: { rollupOptions: { output: { hoistTransitiveImports: false } } },
                     },
                     ...getImageConfig(imageService, imagesConfig, command),
                 });
@@ -96,7 +107,7 @@ export default function vercelEdge({ includeFiles = [], analytics, imageService,
                 const entryPath = fileURLToPath(entry);
 
                 await esbuild.build({
-                    target: 'es2020',
+                    target: 'es2021',
                     platform: 'browser',
                     // https://runtime-keys.proposal.wintercg.org/#edge-light
                     conditions: ['edge-light', 'worker', 'browser'],
@@ -105,7 +116,8 @@ export default function vercelEdge({ includeFiles = [], analytics, imageService,
                     allowOverwrite: true,
                     format: 'esm',
                     bundle: true,
-                    minify: true,
+                    minify: false,
+                    external: ['sharp', 'detect-libc'],
                 });
 
                 // Copy entry and other server files
