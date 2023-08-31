@@ -1,55 +1,13 @@
-import type { AstroConfig, ImageMetadata, ImageQualityPreset, ImageTransform } from 'astro';
-
-export const defaultImageConfig: VercelImageConfig = {
+export const defaultImageConfig = {
 	sizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
 	domains: [],
 };
 
-export function isESMImportedImage(src: ImageMetadata | string): src is ImageMetadata {
+export function isESMImportedImage(src) {
 	return typeof src === 'object';
 }
-// https://vercel.com/docs/build-output-api/v3/configuration#images
-type ImageFormat = 'image/avif' | 'image/webp';
 
-type RemotePattern = {
-	protocol?: 'http' | 'https';
-	hostname: string;
-	port?: string;
-	pathname?: string;
-};
-
-export type VercelImageConfig = {
-	/**
-	 * Supported image widths.
-	 */
-	sizes: number[];
-	/**
-	 * Allowed external domains that can use Image Optimization. Leave empty for only allowing the deployment domain to use Image Optimization.
-	 */
-	domains: string[];
-	/**
-	 * Allowed external patterns that can use Image Optimization. Similar to `domains` but provides more control with RegExp.
-	 */
-	remotePatterns?: RemotePattern[];
-	/**
-	 * Cache duration (in seconds) for the optimized images.
-	 */
-	minimumCacheTTL?: number;
-	/**
-	 * Supported output image formats
-	 */
-	formats?: ImageFormat[];
-	/**
-	 * Allow SVG input image URLs. This is disabled by default for security purposes.
-	 */
-	dangerouslyAllowSVG?: boolean;
-	/**
-	 * Change the [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) of the optimized images.
-	 */
-	contentSecurityPolicy?: string;
-};
-
-export const qualityTable: Record<ImageQualityPreset, number> = {
+export const qualityTable = {
 	low: 25,
 	mid: 50,
 	high: 80,
@@ -57,7 +15,7 @@ export const qualityTable: Record<ImageQualityPreset, number> = {
 };
 
 // TODO: Remove once Astro 3.0 is out and `experimental.assets` is no longer needed
-export function throwIfAssetsNotEnabled(config: AstroConfig, imageService: boolean | undefined) {
+export function throwIfAssetsNotEnabled(config, imageService) {
 	if (!config.experimental.assets && imageService) {
 		throw new Error(
 			`Using the Vercel Image Optimization-powered image service requires \`experimental.assets\` to be enabled. See https://docs.astro.build/en/guides/assets/ for more information.`
@@ -66,9 +24,9 @@ export function throwIfAssetsNotEnabled(config: AstroConfig, imageService: boole
 }
 
 export function getImageConfig(
-	images: boolean | undefined,
-	imagesConfig: VercelImageConfig | undefined,
-	command: string
+	images,
+	imagesConfig,
+	command
 ) {
 	if (images) {
 		return {
@@ -88,11 +46,11 @@ export function getImageConfig(
 }
 
 export function sharedValidateOptions(
-	options: ImageTransform,
-	serviceConfig: Record<string, any>,
-	mode: 'development' | 'production'
+	options,
+	serviceConfig,
+	mode
 ) {
-	const vercelImageOptions = serviceConfig as VercelImageConfig;
+	const vercelImageOptions = serviceConfig;
 
 	if (
 		mode === 'development' &&
@@ -130,7 +88,7 @@ export function sharedValidateOptions(
 	} else {
 		if (!configuredWidths.includes(options.width)) {
 			const nearestWidth = configuredWidths.reduce((prev, curr) => {
-				return Math.abs(curr - options.width!) < Math.abs(prev - options.width!) ? curr : prev;
+				return Math.abs(curr - options.width) < Math.abs(prev - options.width) ? curr : prev;
 			});
 
 			// Save the width the user asked for to inform the `width` and `height` on the `img` tag
