@@ -35,7 +35,7 @@ For [serverless Node.js functions](https://vercel.com/docs/concepts/functions/se
 For static sites, you don't need an adapter.
 
 > **Note**
-> Deploying to the Edge has [its limitations](https://vercel.com/docs/concepts/functions/edge-functions#known-limitations). An edge function can't be more than 1 MB in size and they don't support native Node.js APIs, among others.
+> Deploying to the Edge has [its limitations](https://vercel.com/docs/functions/edge-functions/limitations). An edge function can't be more than 1 MB in size and they don't support native Node.js APIs, among others.
 
 ## Usage
 
