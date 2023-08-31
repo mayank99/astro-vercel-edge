@@ -70,10 +70,6 @@ export default defineConfig({
 Configuration options for [Vercel's Image Optimization API](https://vercel.com/docs/concepts/image-optimization). See [Vercel's image configuration documentation](https://vercel.com/docs/build-output-api/v3/configuration#images) for a complete list of supported parameters.
 
 ```js
-// astro.config.mjs
-import { defineConfig } from 'astro/config';
-import vercel from '@astrojs/vercel/static';
-
 export default defineConfig({
   output: 'server',
   adapter: vercel({
