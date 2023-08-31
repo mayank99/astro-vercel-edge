@@ -7,7 +7,7 @@ import { exposeEnv } from './lib/env.js';
 import { copyFilesToFunction, getFilesFromFolder, getVercelOutput, removeDir, writeJson, } from './lib/fs.js';
 import { getRedirects } from './lib/redirects.js';
 
-const PACKAGE_NAME = '@astrojs/vercel/edge';
+const PACKAGE_NAME = 'astro-vercel-edge';
 
 function getAdapter() {
     return {
