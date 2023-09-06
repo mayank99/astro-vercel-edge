@@ -2,7 +2,7 @@ import esbuild from 'esbuild';
 import { relative as relativePath } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { defaultImageConfig, getImageConfig, throwIfAssetsNotEnabled, } from './image.js';
+import { defaultImageConfig, getImageConfig } from './image.js';
 import { exposeEnv } from './lib/env.js';
 import { copyFilesToFunction, getFilesFromFolder, getVercelOutput, removeDir, writeJson, } from './lib/fs.js';
 import { getRedirects } from './lib/redirects.js';
@@ -60,7 +60,6 @@ export default function vercelEdge({ includeFiles = [], analytics, imageService,
                 });
             },
             'astro:config:done': ({ setAdapter, config }) => {
-                throwIfAssetsNotEnabled(config, imageService);
                 setAdapter(getAdapter());
                 _config = config;
                 buildTempFolder = config.build.server;

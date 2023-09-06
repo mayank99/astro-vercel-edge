@@ -14,15 +14,6 @@ export const qualityTable = {
 	max: 100,
 };
 
-// TODO: Remove once Astro 3.0 is out and `experimental.assets` is no longer needed
-export function throwIfAssetsNotEnabled(config, imageService) {
-	if (!config.experimental.assets && imageService) {
-		throw new Error(
-			`Using the Vercel Image Optimization-powered image service requires \`experimental.assets\` to be enabled. See https://docs.astro.build/en/guides/assets/ for more information.`
-		);
-	}
-}
-
 export function getImageConfig(
 	images,
 	imagesConfig,
