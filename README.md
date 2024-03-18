@@ -1,6 +1,6 @@
 # astro-vercel-edge
 
-A fork of `@astrojs/vercel/edge` created to deploy Astro v3 on Vercel Edge Functions. See [discussion](https://github.com/withastro/roadmap/discussions/631) for why this fork was needed.
+A fork of `@astrojs/vercel/edge` created to deploy Astro v3/v4 on Vercel Edge Functions. See [discussion](https://github.com/withastro/roadmap/discussions/631) for why this fork was needed.
 
 ```
 npm add astro-vercel-edge
